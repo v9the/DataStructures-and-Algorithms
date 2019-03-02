@@ -91,6 +91,7 @@ bool Search(Node* root, int x) {
 				if (x < (*root).data) {
 					root = (*root).ff;
 				}
+				else {
 					root = (*root).ss;
 				}
 	}
