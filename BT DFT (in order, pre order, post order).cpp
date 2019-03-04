@@ -34,68 +34,67 @@ public:
 Node* getNode(int x) {
 	Node* node = new Node();
 	(*node).data = x;
-	(*node).ff = (*node).ss = NULL;
+	(*node).ff = NULL;
+	(*node).ss = NULL;
 	return node;
 }
 
 Node* Insert(Node* root, int x) {
-	Node* node = getNode(x);
-	Node* temp = root;
-	Node* temp2 = NULL;
-	while (temp != NULL) {
-		temp2 = temp;
-		if (x <= (*temp).data) {
-			temp = (*temp).ff;
-		}
-		else {
-			temp = (*temp).ss;
-		}
-	}
 	if (root == NULL) {
+		Node* node = getNode(x);
 		root = node;
 	}
 	else
-		if (x <= (*temp2).data) {
-			(*temp2).ff = node;
+		if (x <= (*root).data) {
+			(*root).ff = Insert((*root).ff, x);
 		}
 		else {
-			(*temp2).ss = node;
+			(*root).ss = Insert((*root).ss, x);
 		}
 	return root;
 }
 
-int findMin(Node* temp) {
-	if (temp == NULL) {
-		return -1;
+void preOrderTrav(Node* root) {
+	if (root == NULL) {
+		return;
 	}
-	if ((*temp).ff == NULL) {
-		return (*temp).data;
-	}
-	else {
-		return findMin((*temp).ff);
-	}
+	cout << (*root).data << ' ';
+	preOrderTrav((*root).ff);
+	preOrderTrav((*root).ss);
 }
 
-int findMax(Node* temp) {
-	if (temp == NULL) {
-		return -1;
+void inOrderTrav(Node* root) {
+	if (root == NULL) {
+		return;
 	}
-	if ((*temp).ss == NULL) {
-		return (*temp).data;
+	inOrderTrav((*root).ff);
+	cout << (*root).data << ' ';
+	inOrderTrav((*root).ss);
+}
+
+void postOrderTrav(Node* root) {
+	if (root == NULL) {
+		return;
 	}
-	else {
-		return findMax((*temp).ss);
-	}
+	postOrderTrav((*root).ff);
+	postOrderTrav((*root).ss);
+	cout << (*root).data << ' ';
 }
 
 int main() {
 	Node* root = NULL;
 	root = Insert(root, 5);
 	root = Insert(root, 10);
-	root = Insert(root, 15);
 	root = Insert(root, 1);
+	root = Insert(root, 3);
+	root = Insert(root, 30);
+	root = Insert(root, 40);
+	root = Insert(root, 7);
+	root = Insert(root, 8);
 
-	cout << findMin(root);
+	preOrderTrav(root);
 	cout << '\n';
-	cout << findMax(root);
+	inOrderTrav(root);
+	cout << '\n';
+	postOrderTrav(root);
 }

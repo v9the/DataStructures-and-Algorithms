@@ -34,57 +34,43 @@ public:
 Node* getNode(int x) {
 	Node* node = new Node();
 	(*node).data = x;
-	(*node).ff = (*node).ss = NULL;
+	(*node).ff = NULL;
+	(*node).ss = NULL;
 	return node;
 }
 
 Node* Insert(Node* root, int x) {
-	Node* node = getNode(x);
-	Node* temp = root;
-	Node* temp2 = NULL;
-	while (temp != NULL) {
-		temp2 = temp;
-		if (x <= (*temp).data) {
-			temp = (*temp).ff;
-		}
-		else {
-			temp = (*temp).ss;
-		}
-	}
 	if (root == NULL) {
+		Node* node = getNode(x);
 		root = node;
 	}
 	else
-		if (x <= (*temp2).data) {
-			(*temp2).ff = node;
+		if (x <= (*root).data) {
+			(*root).ff = Insert((*root).ff, x);
 		}
 		else {
-			(*temp2).ss = node;
+			(*root).ss = Insert((*root).ss, x);
 		}
 	return root;
 }
 
-int findMin(Node* temp) {
-	if (temp == NULL) {
-		return -1;
+void levelOrderTrav(Node* root) {
+	if (root == NULL) {
+		return;
 	}
-	if ((*temp).ff == NULL) {
-		return (*temp).data;
-	}
-	else {
-		return findMin((*temp).ff);
-	}
-}
-
-int findMax(Node* temp) {
-	if (temp == NULL) {
-		return -1;
-	}
-	if ((*temp).ss == NULL) {
-		return (*temp).data;
-	}
-	else {
-		return findMax((*temp).ss);
+	queue<Node*> q;
+	q.push(root);
+	while (!q.empty()) {
+		Node* temp;
+		temp = q.front();
+		cout << (*temp).data << ' ';
+		if ((*temp).ff != NULL) {
+			q.push((*temp).ff);
+		}
+		if ((*temp).ss != NULL) {
+			q.push((*temp).ss);
+		}
+		q.pop();
 	}
 }
 
@@ -92,10 +78,9 @@ int main() {
 	Node* root = NULL;
 	root = Insert(root, 5);
 	root = Insert(root, 10);
-	root = Insert(root, 15);
 	root = Insert(root, 1);
+	root = Insert(root, 3);
+	root = Insert(root, 25);
 
-	cout << findMin(root);
-	cout << '\n';
-	cout << findMax(root);
+	levelOrderTrav(root);
 }

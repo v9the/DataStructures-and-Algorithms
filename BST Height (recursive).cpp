@@ -64,39 +64,6 @@ Node* Insert(Node* root, int x) {
 	return root;
 }
 
-bool Search(Node* root, int x) {
-	if (root == NULL) {
-		return 0;
-	}
-	else
-		if ((*root).data == x) {
-			return 1;
-		}
-		else
-			if (x <= (*root).data) {
-				return Search((*root).ff, x);
-			}
-			else {
-				return Search((*root).ss, x);
-			}
-	while (root != NULL) {
-		if (root == NULL) {
-			return 0;
-		}
-		else
-			if ((*root).data == x) {
-				return 1;
-			}
-			else
-				if (x < (*root).data) {
-					root = (*root).ff;
-				}
-				else {
-					root = (*root).ss;
-				}
-	}
-}
-
 int findHeight(Node* temp) {
 	if (temp == NULL) {
 		return -1;
