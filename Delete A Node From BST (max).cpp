@@ -54,38 +54,54 @@ Node* Insert(Node* root, int x) {
 	return root;
 }
 
-bool isLesser(Node* root, int value) {
+void inOrder(Node* root) {
 	if (root == NULL)
-		return true;
-	if ((*root).data <= value
-		&& isLesser((*root).ff, value)
-		&& isLesser((*root).ss, value))
-		return true;
-	else
-		return false;
+		return;
+	inOrder((*root).ff);
+	cout << (*root).data << ' ';
+	inOrder((*root).ss);
 }
 
-bool isGreater(Node* root, int value) {
-	if (root == NULL)
-		return true;
-	if ((*root).data > value
-		&& isGreater((*root).ff, value)
-		&& isGreater((*root).ss, value))
-		return true;
+int findMax(Node* root) {
+	if ((*root).ss == NULL)
+		return (*root).data;
 	else
-		false;
+		return findMax((*root).ss);
 }
 
-bool isBST(Node* root) {
+Node* Delete(Node* root, int x) {
 	if (root == NULL)
-		return true;
-	if (isLesser((*root).ff, (*root).data)
-		&& isGreater((*root).ss, (*root).data)
-		&& isBST((*root).ff)
-		&& isBST((*root).ss))
-		return true;
-	else 
-		return false;
+		return root;
+	if (x < (*root).data)
+		(*root).ff = Delete((*root).ff, x);
+	else
+		if (x > (*root).data)
+			(*root).ss = Delete((*root).ss, x);
+		else {
+			if ((*root).ff == NULL && (*root).ss == NULL) {
+				delete root;
+				return NULL;
+			}
+			else
+				if ((*root).ff == NULL) {
+					Node* temp = (*root).ss;
+					delete root;
+					return temp;
+				}
+				else
+					if ((*root).ss == NULL) {
+						Node* temp = (*root).ff;
+						delete root;
+						return temp;
+					}
+					else {
+						int val = findMax((*root).ff);
+						(*root).data = val;
+						(*root).ff = Delete((*root).ff, val);
+						return root;
+					}
+		}
+	return root;
 }
 
 int main() {
@@ -93,6 +109,11 @@ int main() {
 	root = Insert(root, 5);
 	root = Insert(root, 10);
 	root = Insert(root, 1);
-	root = Insert(root, 1);
-	cout << isBST(root);
+	root = Insert(root, 9);
+	root = Insert(root, 25);
+	root = Insert(root, 2);
+	inOrder(root);
+	cout << '\n';
+	root = Delete(root, 5);
+	inOrder(root);
 }

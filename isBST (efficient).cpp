@@ -54,38 +54,18 @@ Node* Insert(Node* root, int x) {
 	return root;
 }
 
-bool isLesser(Node* root, int value) {
-	if (root == NULL)
+bool isBST(Node* root, int min, int max) {
+	if (root == NULL) {
 		return true;
-	if ((*root).data <= value
-		&& isLesser((*root).ff, value)
-		&& isLesser((*root).ss, value))
+	}
+	if ((*root).data >= min && (*root).data <= max
+		&& isBST((*root).ff, min, (*root).data)
+		&& isBST((*root).ss, (*root).data + 1, max)) {
 		return true;
-	else
+	}
+	else {
 		return false;
-}
-
-bool isGreater(Node* root, int value) {
-	if (root == NULL)
-		return true;
-	if ((*root).data > value
-		&& isGreater((*root).ff, value)
-		&& isGreater((*root).ss, value))
-		return true;
-	else
-		false;
-}
-
-bool isBST(Node* root) {
-	if (root == NULL)
-		return true;
-	if (isLesser((*root).ff, (*root).data)
-		&& isGreater((*root).ss, (*root).data)
-		&& isBST((*root).ff)
-		&& isBST((*root).ss))
-		return true;
-	else 
-		return false;
+	}
 }
 
 int main() {
@@ -94,5 +74,14 @@ int main() {
 	root = Insert(root, 10);
 	root = Insert(root, 1);
 	root = Insert(root, 1);
-	cout << isBST(root);
+	root = Insert(root, 1);
+	root = Insert(root, 3);
+	root = Insert(root, 30);
+	root = Insert(root, 40);
+	root = Insert(root, 40);
+	root = Insert(root, 7);
+	root = Insert(root, 8);
+	root = Insert(root, 8);
+
+	cout << isBST(root, INT_MIN, INT_MAX);
 }
