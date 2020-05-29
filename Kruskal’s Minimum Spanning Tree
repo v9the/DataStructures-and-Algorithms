@@ -10,7 +10,7 @@ typedef long double ld;
 template <typename T, typename T2>
 class Graph {
 public:
-	vector<pair<T, pair<T, T2>>> adjList, adjList2;
+	vector<pair<T, pair<T, T2>>> adjList;
 	vector<T> parent;
 	vector<T> rank;
 	Graph(T V) {
