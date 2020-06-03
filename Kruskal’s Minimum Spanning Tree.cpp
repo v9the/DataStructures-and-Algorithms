@@ -35,17 +35,17 @@ public:
 		return parent[node];
 	}
 	void merge(T node, T node2) {
-	T node_parent = find(node);
-	T node2_parent = find(node2);
-	if (node_parent == node2_parent)
-		return;
-	if (rnk[node_parent] < rnk[node2_parent])
-		parent[node_parent] = node2_parent;
-	else
-		parent[node2_parent] = node_parent;
-	if (rnk[node_parent] == rnk[node2_parent])
-		rnk[node_parent]++;
-}
+		T node_parent = find(node);
+		T node2_parent = find(node2);
+		if (node_parent == node2_parent)
+			return;
+		if (rnk[node_parent] < rnk[node2_parent])
+			parent[node_parent] = node2_parent;
+		else
+			parent[node2_parent] = node_parent;
+		if (rnk[node_parent] == rnk[node2_parent])
+			rnk[node_parent]++;
+	}
 	T2 kruskal() {
 		sort(adjList.begin(), adjList.end(), cmp);
 		T2 weight = 0;
