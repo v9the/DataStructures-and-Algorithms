@@ -305,3 +305,105 @@ ll nCr(ll n, ll k) {
 		}
 	}
 	//ans will be cout << a[n][r];
+
+
+
+More:
+
+
+
+1>
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int extended_euclid_gcd(int a, int b, int &x, int &y) {
+	if(b == 0) {
+		x=1;
+		y=0;
+		return a;
+	}
+	int x2, y2, tmp;
+	tmp = extended_euclid_gcd(b, a%b, x2, y2);
+	x=y2;
+	y=x2-y2*(a/b);
+	return tmp;
+}
+
+int main() {
+	int a=16, b=10, x, y;
+	int gcd = extended_euclid_gcd(a,b,x,y);
+	cout << "GCD: " << gcd << endl;
+	cout << "x: " << x << ", y: " << y;
+}
+// we can also use above algorithm to find multiplicative modulo invere in eqn(A*B mod M = 1) which is B
+// as we can pass like.. extended_euclid_gcd(A,M,x,y) where x will be B
+
+
+2>
+
+how to find number of divisors of n!
+ans--
+we have to simulate n! into p(1) ^ a * p(2) ^ b ... p(n) ^ k 
+where p(i)^a canbe found by eg-- 2^2,3^2,5^5 etc by n/p(i)^(idx) ie(supposewe have to find for prime 2
+then first n/2---save its cnt, then n/4..n/6.....till n/k != 0
+cnt--n/2
+cnt2--n/4
+cnt3--n/16
+.
+.
+cntk--n/k
+
+so 2 ^ (cnt+cnt2+...cntk)
+similarly for another primes thenwe can find p(1) ^ a * p(2) ^ b ... p(n) ^ k 
+)  
+so answer will be cout << (a+1) * (b+1) * ... (k+1)
+
+
+
+3>
+
+
+fibonacci sum problem:
+S(n)=f(n+2) - 1
+
+
+4>
+
+
+fermet little thrm:
+(a ^ p) % p = a or (a ^ p) congruent to (a mod p) where p is prime
+
+so divide by a^2 , we get
+
+(a ^ (p - 2)) % p = (a ^ (-1)) % p
+it can also be used in multiplicative modulo invere if p is prime
+
+
+5>
+
+Wilson thrm:
+
+( (p-1)! ) % p = -1 or p - 1 where p is prime
+
+
+6>
+
+
+Euler totient fn:
+it is the phi(n) where answer will be cnt of numbers whose gcd is 1 with n ie, gcd(n,m) = 1
+
+so, formula is: phi(n) = n*(1-1/p1)*(1-1/p2)....*(1-1/pk) , where p1,p2..pk is prime factors of n
+
+Property: 
+
+phi(a*b) = phi(a)*phi(b) only when gcd(a,b) = 1
+
+phi(p^m) = p ^ m - p ^ (m-1) , where p is prime
+
+phi(p) = p-1 , where p is prime
+
+sum of phi(factor1 of n) + phi(factor2 of n)...+ phi(factork of n) = n
+
+most imp pro. is: a^phi(p) = 1(mod p) (eqn is congruent)
