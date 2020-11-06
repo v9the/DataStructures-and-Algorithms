@@ -372,7 +372,7 @@ S(n)=f(n+2) - 1
 4>
 
 
-fermet little thrm:
+fermat little thrm:
 (a ^ p) % p = a or (a ^ p) congruent to (a mod p) where p is prime
 
 so divide by a^2 , we get
